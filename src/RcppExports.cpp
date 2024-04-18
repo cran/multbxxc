@@ -7,6 +7,11 @@
 
 using namespace Rcpp;
 
+#ifdef RCPP_USE_GLOBAL_ROSTREAM
+Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
+Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
+#endif
+
 // mult_bxxc
 void mult_bxxc(NumericVector a, List b, NumericVector c);
 RcppExport SEXP _multbxxc_mult_bxxc(SEXP aSEXP, SEXP bSEXP, SEXP cSEXP) {

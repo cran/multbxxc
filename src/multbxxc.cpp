@@ -287,12 +287,55 @@ void bop(NumericVector& dst, const IntegerVector& mv, const std::string& sop, Nu
       umat  mvu=as<umat>(mv);
 //print(wrap(iv));
       vec vdst=vec(dst.begin(), dst.size(), false);
-      vec vsrc=vec(src.begin(), src.size(), false);
       did.tail(did.size()-1)=cumprod(did.head(did.size()-1));
       did(0)=1;
       mvu=mvu-1;
 #define iv sum(mvu.each_row() % did.t(), 1)
-      vdst(iv)=vsrc;
+      if (src.size() == 1) {
+         switch(s2i(sop.c_str())) {
+         case(s2i("=")):
+            vdst(iv).fill(src[0]);
+            break;
+         case(s2i("+=")):
+            vdst(iv) += src[0];
+            break;
+         case(s2i("-=")):
+            vdst(iv) -= src[0];
+            break;
+         case(s2i("*=")):
+            vdst(iv) *= src[0];
+            break;
+         case(s2i("/=")):
+            vdst(iv) /= src[0];
+            break;
+         default:
+            stop("Unknown operation '"+sop+"'");
+         }
+         return;
+      } else {
+         vec vsrc=vec(src.begin(), src.size(), false);
+         switch(s2i(sop.c_str())) {
+         case(s2i("=")):
+            vdst(iv)=vsrc;
+            break;
+         case(s2i("+=")):
+            vdst(iv) += vsrc;
+            break;
+         case(s2i("-=")):
+            vdst(iv) -= vsrc;
+            break;
+         case(s2i("*=")):
+            vdst(iv) %= vsrc;
+            break;
+         case(s2i("/=")):
+            vdst(iv) /= vsrc;
+            break;
+         default:
+            stop("Unknown operation '"+sop+"'");
+         }
+         return;
+         vdst(iv)=vsrc;
+      }
 #undef iv
       return;
    }
