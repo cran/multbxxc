@@ -1,3 +1,9 @@
+Version 1.0.3
+=============
+
+* 2024-06-26
+   - resize(): removed because of non R-API functions
+
 Version 1.0.2
 =============
 

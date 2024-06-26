@@ -106,25 +106,6 @@ redim <- function(x, di) {
     invisible(.Call(`_multbxxc_redim`, x, di))
 }
 
-#' New Dimensions with Resizing
-#'
-#' Write new dimension vector while keeping the old memory if possible
-#' New memory cannot be greater than the very first allocation
-#' @param x_ A numeric array
-#' @param di An integer vector, new dimensions
-#' @return None
-#' @examples
-#' a=matrix(as.double(1:12), 6, 2)
-#' resize(a, c(2, 2))
-#' a
-#' #      [,1] [,2]
-#' # [1,]    1    3
-#' # [2,]    2    4
-#' @export
-resize <- function(x_, di) {
-    invisible(.Call(`_multbxxc_resize`, x_, di))
-}
-
 #' Transform Repeated Matrix Indexes
 #'
 #' Transforms a couple of index vectors ir and jc (ij of a sparse matrix)

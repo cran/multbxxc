@@ -454,45 +454,10 @@ void redim(NumericVector& x, uvec& di) {
    uvec dix;
    dix=x.hasAttribute("dim") ? as<uvec>(x.attr("dim")) : uvec(1).fill(x.size());
    if (prod(dix) != prod(di))
-      stop("Space in x ("+to_string(prod(dix))+") is not equal to new one ("+to_string(prod(di))+")");
+      stop("Size of x ("+to_string(prod(dix))+") is not equal to the new one ("+to_string(prod(di))+")");
    x.attr("dim")=di;
 }
 
-//' New Dimensions with Resizing
-//'
-//' Write new dimension vector while keeping the old memory if possible
-//' New memory cannot be greater than the very first allocation
-//' @param x_ A numeric array
-//' @param di An integer vector, new dimensions
-//' @return None
-//' @examples
-//' a=matrix(as.double(1:12), 6, 2)
-//' resize(a, c(2, 2))
-//' a
-//' #      [,1] [,2]
-//' # [1,]    1    3
-//' # [2,]    2    4
-//' @export
-// [[Rcpp::export]]
-void resize(SEXP& x_, uvec& di) {
-   // write new dimension vector while keeping the old memory
-   RObject x=as<RObject>(x_);
-   //Rcout << "len=" << LENGTH(x_) << endl;
-   //Rcout << "tlen=" << TRUELENGTH(x_) << endl;
-#if R_Version(3, 4, 0) <= R_VERSION
-   if (!IS_GROWABLE(x_)) {
-      SET_GROWABLE_BIT(x_);
-      SET_TRUELENGTH(x_, XLENGTH(x_));
-   }
-#endif
-   //Rcout << "n=" << XLENGTH(x_) << endl;
-   int pdi= (int) prod(di);
-   if (TRUELENGTH(x_) >= pdi)
-      SETLENGTH(x_, pdi);
-   else
-      stop("Space in x ("+to_string(TRUELENGTH(x_))+") is not sufficient for new one ("+to_string(pdi)+")");
-   x.attr("dim")=di;
-}
 
 //' Transform Repeated Matrix Indexes
 //'

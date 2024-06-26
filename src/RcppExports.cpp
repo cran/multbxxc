@@ -77,17 +77,6 @@ BEGIN_RCPP
     return R_NilValue;
 END_RCPP
 }
-// resize
-void resize(SEXP& x_, uvec& di);
-RcppExport SEXP _multbxxc_resize(SEXP x_SEXP, SEXP diSEXP) {
-BEGIN_RCPP
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< SEXP& >::type x_(x_SEXP);
-    Rcpp::traits::input_parameter< uvec& >::type di(diSEXP);
-    resize(x_, di);
-    return R_NilValue;
-END_RCPP
-}
 // ij2ijv_i
 List ij2ijv_i(IntegerVector& ir, IntegerVector& jc);
 RcppExport SEXP _multbxxc_ij2ijv_i(SEXP irSEXP, SEXP jcSEXP) {
@@ -144,7 +133,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_multbxxc_match_ij", (DL_FUNC) &_multbxxc_match_ij, 4},
     {"_multbxxc_bop", (DL_FUNC) &_multbxxc_bop, 4},
     {"_multbxxc_redim", (DL_FUNC) &_multbxxc_redim, 2},
-    {"_multbxxc_resize", (DL_FUNC) &_multbxxc_resize, 2},
     {"_multbxxc_ij2ijv_i", (DL_FUNC) &_multbxxc_ij2ijv_i, 2},
     {"_multbxxc_iv2v", (DL_FUNC) &_multbxxc_iv2v, 2},
     {"_multbxxc_mm_xpf", (DL_FUNC) &_multbxxc_mm_xpf, 3},
